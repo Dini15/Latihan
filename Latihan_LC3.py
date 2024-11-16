@@ -22,12 +22,11 @@ def all_data():
 @app.get("/data/{id}")
 def data_by_index(id: int):
 
-    filtered_data = data[data['id'] == id]
-
-    if filtered_data.empty:
+    if id < 0 or id > len(data):
         raise HTTPException(status_code=404, detail='Data tidak ditemukan')
-    else:
-        return {"data": filtered_data.to_dict(orient='records')[0]}
+    row = data.iloc[id]
+    # else:
+    return {"data": row.to_dict()}
     # data.to_dict(orient='records')
     
 #endpoint untuk menghapus data berdasarkan index
